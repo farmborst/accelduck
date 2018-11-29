@@ -1,0 +1,82 @@
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+PS1='\[\033[1;36m\]$(printf "\\u2500%.0s" $(seq 22 $(tput cols))) \d, \t\n\u@\h : \[\033[1;33m\]\w \n\[\033[1;36m\] >>\[\033[1;37m\] '
+PROMPT_COMMAND='echo -en "\033]0;$USER@$HOSTNAME\a"'
+PROMPT_DIRTRIM=8
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias c='vimcat'
+alias j='jobs'
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# some more ls aliases
+alias ll='ls -lah'
+alias l='ls -lh'
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+export LIBGL_ALWAYS_SOFTWARE=1
+export XDG_RUNTIME_DIR=/tmp
+
+###############
+#### Mad-X ####
+###############
+alias madx='/opt/mad/madx-linux64-intel'
+
+####################
+#### EPICS-BASE ####
+####################
+export EPICS_CA_ADDR_LIST='193.149.12.5 193.149.12.6'
+export EPICS_HOST_ARCH=linux-x86_64
+export HOST_ARCH=linux-x86_64
+export EPICS_BASE=/opt/epics/base-3.15.6/
+export PATH=$PATH:/opt/epics/base-3.15.6/bin/linux-x86_64/
+
+#################
+#### Elegant ####
+#################
+export RPN_DEFNS=/opt/elegant/defns.rpn
+alias Pelegant='mpiexec.hydra -n 8 Pelegant'
+
+###############
+#### julia ####
+###############
+export PATH=$PATH:/opt/julia/julia-1.0.2/bin/
+
+###############
+#### accpy ####
+###############
+export PYTHONPATH=$PYTHONPATH:/opt/accpy
+
+###################
+#### PROSILICA ####
+###################
+export GENICAM_GENTL64_PATH=/opt/vimba/Vimba_2_1/VimbaGigETL/CTI/x86_64bit
+export GENICAM_GENTL32_PATH=/opt/vimba/Vimba_2_1/VimbaGigETL/CTI/x86_32bit

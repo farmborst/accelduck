@@ -1,0 +1,6 @@
+syntax on		" Enable syntax highlighting
+set background=dark     " Adjust colorscheme for dark background
+set wildmenu		" Better command-line completion
+set visualbell 		" visual bell instead of beep when doing something wrong
+set mouse=a             " Enable use of the mouse for all modes
+set number		" Display line numbers on the left
