@@ -92,6 +92,8 @@ RUN apt-get update \
 	python3-virtualenv \
 	python-tk \
 	python3-tk \
+	python-pyqt5 \
+	python-qtpy \
 	texlive-full \
 	texlive-latex-extra \
 	texstudio
@@ -134,7 +136,6 @@ RUN /bin/bash -c "\
 		nose \
 		scikit-learn \
 		vtk \
-		pyqt5 \
 		pyepics \
 		spyder \
 		pymba \
@@ -169,7 +170,9 @@ RUN /bin/bash -c "\
 		pymba \
 	&& pip install --upgrade \
 		mayavi \
-	&& python -m ipykernel install --user --name py27env --display-name 'Python 2'"
+	&& python -m ipykernel install --user --name py27env --display-name 'Python 2' \
+	&& ln -s /usr/lib/python2.7/dist-packages/PyQt5/ /root/venv_python2/lib/python2.7/site-packages/ \
+	&& ln -s /usr/lib/python2.7/dist-packages/sip.x86_64-linux-gnu.so /root/venv_python2/lib/python2.7/site-packages/"
 
 
 
