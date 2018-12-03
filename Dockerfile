@@ -104,7 +104,6 @@ RUN apt-get install -y -q -t stretch-backports \
 	libgl1-mesa-glx \
 	octave
 
-ARG accelduck_ver=0.2
 COPY dotfiles/bashrc /root/.bashrc
 COPY dotfiles/vimrc /root/.vimrc
 
@@ -140,6 +139,7 @@ RUN /bin/bash -c "\
 		spyder \
 		pymba \
 	&& pip install --upgrade \
+		ozelot \
 		mayavi "
 
 
@@ -169,13 +169,11 @@ RUN /bin/bash -c "\
 		spyder \
 		pymba \
 	&& pip install --upgrade \
+		ozelot \
 		mayavi \
 	&& python -m ipykernel install --user --name py27env --display-name 'Python 2' \
 	&& ln -s /usr/lib/python2.7/dist-packages/PyQt5/ /root/venv_python2/lib/python2.7/site-packages/ \
 	&& ln -s /usr/lib/python2.7/dist-packages/sip.x86_64-linux-gnu.so /root/venv_python2/lib/python2.7/site-packages/"
-
-
-
 
 ###############
 #### Mad-X ####
@@ -214,6 +212,7 @@ COPY 3rdparty/accpy /opt/accpy/
 ###############
 #### julia ####
 ###############
+ARG accelduck_ver=0.333
 COPY 3rdparty/julia/julia-1.0.2-linux-x86_64.tar.gz /opt/julia/
 COPY 3rdparty/julia/addons.jl /opt/julia
 RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
