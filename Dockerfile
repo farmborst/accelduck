@@ -96,13 +96,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	libgl1-mesa-glx \
 	octave
 
-<<<<<<< HEAD
-=======
 COPY dotfiles/bashrc /root/.bashrc
 COPY dotfiles/vimrc /root/.vimrc
 
-
->>>>>>> 1ad5cc887dfb618ec5c7ad5e8e62ec46ef572b1e
 #############################
 ##### Python3 Virtualenv ####
 #############################
