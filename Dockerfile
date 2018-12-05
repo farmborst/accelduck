@@ -24,7 +24,6 @@
 # ## Test Installation
 # >> docker run hello-world
 
-
 ############################################################
 #### Building, Distributing and Running this Dockerfile ####
 ############################################################
@@ -35,21 +34,14 @@
 # >> source /root/venv_python3/bin/activate
 # >> jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --allow-root --NotebookApp.token='yourpassword'
 
-
-#########################
-#### Debian-Sttretch ####
-#########################
+####################################
+#### Debian-Stretch Environment ####
+####################################
 FROM debian:stretch
 
-
-#########################################
-#### My Preferred Debian Environment ####
-#########################################
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV TZ Europe/Berlin
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
- && echo 'deb http://deb.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/backports.list
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -57,7 +49,8 @@ COPY dotfiles/apt_preferences /etc/apt/preferences
 COPY dotfiles/sources.list /etc/apt/
 COPY dotfiles/backports.list /etc/apt/sources.list.d/
 
-RUN apt-get update \
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+ && apt-get update \
  && apt-get -y --no-install-recommends install apt-utils \
  && apt-get -y -q upgrade \
  && apt-get -y -q dist-upgrade \
@@ -96,18 +89,20 @@ RUN apt-get update \
 	python-qtpy \
 	texlive-full \
 	texlive-latex-extra \
-	texstudio
-	
-RUN apt-get install -y -q -t stretch-backports \
+	texstudio \
+  && apt-get install -y -q -t stretch-backports \
 	nodejs \
 	intel-mkl \
 	libgl1-mesa-glx \
 	octave
 
+<<<<<<< HEAD
+=======
 COPY dotfiles/bashrc /root/.bashrc
 COPY dotfiles/vimrc /root/.vimrc
 
 
+>>>>>>> 1ad5cc887dfb618ec5c7ad5e8e62ec46ef572b1e
 #############################
 ##### Python3 Virtualenv ####
 #############################
@@ -131,7 +126,6 @@ RUN /bin/bash -c "\
 		jupyterlab \
 		tensorflow \
 		deap \
-		sympy \
 		nose \
 		scikit-learn \
 		vtk \
@@ -141,7 +135,6 @@ RUN /bin/bash -c "\
 	&& pip install --upgrade \
 		ozelot \
 		mayavi "
-
 
 #############################
 ##### Python2 Virtualenv ####
@@ -161,7 +154,6 @@ RUN /bin/bash -c "\
 		jupyterlab \
 		tensorflow \
 		deap \
-		sympy \
 		nose \
 		scikit-learn \
 		vtk \
@@ -219,6 +211,18 @@ RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
   && rm /opt/julia/*.tar.gz \
   && /opt/julia/julia-1.0.2/bin/julia /opt/julia/addons.jl
 
+#################
+#### pycharm ####
+#################
+COPY 3rdparty/pycharm-community-2018.3.tar.gz /opt/pycharm/
+RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
+  && rm /opt/pycharm/**.tar.gz
+
+##################
+#### dotfiles ####
+##################
+COPY dotfiles/bashrc /root/.bashrc
+COPY dotfiles/vimrc /root/.vimrc
 
 ##################	
 #### Clean-Up ####

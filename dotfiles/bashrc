@@ -75,6 +75,11 @@ export PATH=$PATH:/opt/julia/julia-1.0.2/bin/
 ###############
 export PYTHONPATH=$PYTHONPATH:/opt/accpy
 
+#################
+#### pycharm ####
+#################
+alias pycharm='/opt/pycharm/pycharm-community-2018.3/bin/pycharm.sh'
+
 ###################
 #### PROSILICA ####
 ###################
