@@ -215,6 +215,7 @@ RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
 #### pycharm ####
 #################
 COPY 3rdparty/pycharm-community-2018.3.tar.gz /opt/pycharm/
+COPY 3rdparty/PyCharmCE2018.3 /root/.PyCharmCE2018.3
 RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
   && rm /opt/pycharm/**.tar.gz
 
