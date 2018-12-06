@@ -80,6 +80,12 @@ export PYTHONPATH=$PYTHONPATH:/opt/accpy
 #################
 alias pycharm='/opt/pycharm/pycharm-community-2018.3/bin/pycharm.sh'
 
+###########
+#### R ####
+###########
+export R_LIBS='/opt/R/Rpackages/'
+
+
 ###################
 #### PROSILICA ####
 ###################

@@ -21,9 +21,10 @@ COPY dotfiles/apt_preferences /etc/apt/preferences
 COPY dotfiles/sources.list /etc/apt/
 COPY dotfiles/backports.list /etc/apt/sources.list.d/
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+ && echo $TZ > /etc/timezone \
  && apt-get update \
- && apt-get -y -q apt-utils apt-transport-https \
+ && apt-get -y -q install apt-utils apt-transport-https \
  && apt-get -y -q upgrade \
  && apt-get -y -q dist-upgrade \
  && apt-get -y -q install \
@@ -77,15 +78,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 #############################
 ##### Python3 Virtualenv ####
 #############################
-# !!!! USE JUPYTERLAB FROM PYTHON 3 VIRTUALENV !!!!
-# see all kernels: >> jupyter kernelspec list
-# delete corresponding folder to remove specific kernel
-# >> source root/python3_VE/bin/activate
-# >> jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --allow-root --NotebookApp.token='yourpassword'
-RUN virtualenv --python=python3 --no-site-packages /root/venv_python3
-RUN /bin/bash -c "\
-	source /root/venv_python3/bin/activate \
-	&& pip install --upgrade \
+RUN virtualenv --python=python3 --no-site-packages /root/venv_python3 \
+  && /bin/bash -c "\
+	 source /root/venv_python3/bin/activate \
+	  && pip install --upgrade \
 		pip \
 		numpy \
 		scipy \
@@ -103,15 +99,15 @@ RUN /bin/bash -c "\
 		pyepics \
 		spyder \
 		pymba \
-	&& pip install --upgrade \
+	  && pip install --upgrade \
 		ozelot \
-		mayavi "
+		mayavi"
 
 #############################
 ##### Python2 Virtualenv ####
 #############################
-RUN virtualenv --python=python2 --no-site-packages /root/venv_python2
-RUN /bin/bash -c "\
+RUN virtualenv --python=python2 --no-site-packages /root/venv_python2 \
+  && /bin/bash -c "\
 	source /root/venv_python2/bin/activate \
 	&& pip install --upgrade \
 		pip \
@@ -192,14 +188,17 @@ RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
 ###########
 #### R ####
 ###########
-# libmariadbclient-dev openjdk-8-jdk 
-COPY 3rdparty/R/packages.txt /opt/R/
-RUN echo 'deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/' >> /etc/apt/sources.list.d/cran.list \
-  && apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-  && apt-get update \
-  && apt-get install -y -q r-base \
+COPY dotfiles/R*.txt /opt/R/
+RUN /bin/bash -c "mkdir -p /opt/R/Rpackages/ \
+  && export GPG_TTY='/dev/tty' \
+  && export R_LIBS='/opt/R/Rpackages/' \
+  && echo 'deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/' >> /etc/apt/sources.list.d/cran.list \
+  && apt-key adv --no-tty --keyserver hkp://pgp.mit.edu --recv-key ''E19F5F87128899B192B1A2C2AD5F960A256A04AF'' \
+  && apt-get -y -q update \
+  && apt-get install -y -q r-base libunwind8-dev\
   && source /root/venv_python3/bin/activate \
-  && R -f /opt/R/packages.txt
+  && export R_LIBS='/opt/R/Rpackages/' \
+  && R -f /opt/R/Rpackages.txt"
 
 ##################
 #### dotfiles ####
