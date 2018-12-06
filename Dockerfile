@@ -1,38 +1,10 @@
-#######################################
-#### Debian Docker CE Installation ####
-#######################################
-# ## Install packages to allow apt to use a repository over HTTPS 
-# >> apt-get install \
-#      apt-transport-https \
-#      ca-certificates \
-#      curl \
-#      gnupg2 \
-#      software-properties-common
-# ## Add Docker’s official GPG key
-# >> curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
-# >> apt-key fingerprint 0EBFCD88
-# >> add-apt-repository \
-#      "deb [arch=amd64] https://download.docker.com/linux/debian \
-#      $(lsb_release -cs) \
-#      stable"
-# ## Install Docker CE
-# >> apt-get update
-# >> apt-get install docker-ce
-# ## Create the docker group and add user to it
-# >> groupadd docker
-# >> usermod -aG docker $USER
-# ## Test Installation
-# >> docker run hello-world
-
-############################################################
-#### Building, Distributing and Running this Dockerfile ####
-############################################################
+#############################################################
+#### Building, Distributing and runnging this Dockerfile ####
+#############################################################
 # >> docker build . -t debianstretch:accelduck
 # >> docker save -o /PATHTOFILE/accelduck-amd64.tar debianstretch:accelduck
 # >> docker load -i /PATHTOFILE/accelduck-amd64.tar
 # >> docker run -v /PATHTOSHAREDDIR/dockershare:/mnt/dockershare --network host -ti debianstretch:accelduck /bin/bash
-# >> source /root/venv_python3/bin/activate
-# >> jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --allow-root --NotebookApp.token='yourpassword'
 
 ####################################
 #### Debian-Stretch Environment ####
@@ -51,10 +23,9 @@ COPY dotfiles/backports.list /etc/apt/sources.list.d/
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
  && apt-get update \
- && apt-get -y --no-install-recommends install apt-utils \
+ && apt-get -y -q apt-utils apt-transport-https \
  && apt-get -y -q upgrade \
  && apt-get -y -q dist-upgrade \
- && apt-get -y -q install apt-utils \
  && apt-get -y -q install \
 	htop \
 	screen \
@@ -63,6 +34,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	git \
 	openssl \
 	libx11-dev \
+	libxt-dev \
 	make \
 	gfortran \
 	g++ \
@@ -72,6 +44,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	alien \
 	libgsl2 \
 	libboost-dev \
+	libcurl4-openssl-dev \
+	libssl-dev \
+	libxml2-dev \
 	libopenblas-base \
 	libopenblas-dev \
 	libatlas3-base \
@@ -94,10 +69,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
 	nodejs \
 	intel-mkl \
 	libgl1-mesa-glx \
+	libgl1-mesa-dev \
+	libglu1-mesa-dev \
 	octave
 
-COPY dotfiles/bashrc /root/.bashrc
-COPY dotfiles/vimrc /root/.vimrc
 
 #############################
 ##### Python3 Virtualenv ####
@@ -200,7 +175,6 @@ COPY 3rdparty/accpy /opt/accpy/
 ###############
 #### julia ####
 ###############
-ARG accelduck_ver=0.333
 COPY 3rdparty/julia/julia-1.0.2-linux-x86_64.tar.gz /opt/julia/
 COPY 3rdparty/julia/addons.jl /opt/julia
 RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
@@ -210,10 +184,22 @@ RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
 #################
 #### pycharm ####
 #################
-COPY 3rdparty/pycharm-community-2018.3.tar.gz /opt/pycharm/
-COPY 3rdparty/PyCharmCE2018.3 /root/.PyCharmCE2018.3
+COPY 3rdparty/pycharm/pycharm-community-2018.3.tar.gz /opt/pycharm/
+COPY 3rdparty/pycharm/PyCharmCE2018.3 /root/.PyCharmCE2018.3
 RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
   && rm /opt/pycharm/**.tar.gz
+
+###########
+#### R ####
+###########
+# libmariadbclient-dev openjdk-8-jdk 
+COPY 3rdparty/R/packages.txt /opt/R/
+RUN echo 'deb https://cloud.r-project.org/bin/linux/debian stretch-cran35/' >> /etc/apt/sources.list.d/cran.list \
+  && apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
+  && apt-get update \
+  && apt-get install -y -q r-base \
+  && source /root/venv_python3/bin/activate \
+  && R -f /opt/R/packages.txt
 
 ##################
 #### dotfiles ####
