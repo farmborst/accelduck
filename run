@@ -1,2 +1,2 @@
-docker run -v /home/inp/docker/dockershare:/mnt/dockershare -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0.0 --network host -ti debianstretch:accelduck /bin/bash
+docker run -v /home/inp/git/github/promotion:/mnt/dockershare -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0.0 --network host -ti debianstretch:accelduck /bin/bash
 #docker run -v /home/inp/docker/dockershare:/mnt/dockershare -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0.0 --network host -ti debianstretch:accelduck /bin/bash -c "source /root/venv_python3/bin/activate && jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --allow-root --ip=127.0.0.1 --NotebookApp.token='accelduck'"
