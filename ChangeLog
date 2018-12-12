@@ -1,0 +1,13 @@
+##############################
+## 2018-12-11 [Version 0.2] ##
+##############################
+# Added & Removed
+  + Python 3.7.1
+  + Python 3.6.7
+  + pip: pyfftw, ipympl
+  + jupyter labextension: jupyter-matplotlib, jupyter-widgets
+  + tmux
+# Changed
+  + Elegant 34.4.1 -> 35.0.1
+# 
+
