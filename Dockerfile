@@ -240,7 +240,7 @@ RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
 #################
 #### Elegant ####
 #################
-COPY 3rdparty/elegant/20181211_Debian9.3_64/*.rpm /opt/elegant/
+COPY 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
 COPY 3rdparty/elegant/defns.rpn /opt/elegant/
 Run alien -i /opt/elegant/*.rpm \
   && rm /opt/elegant/*.rpm \
