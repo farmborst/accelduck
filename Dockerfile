@@ -105,6 +105,7 @@ RUN virtualenv --python=python3 --no-site-packages /root/venv_python3.5.3 \
 		sympy \
 		h5py\
 		matplotlib \
+		pyfftw \
 		jupyter \
 		jupyterlab \
 		jupyterthemes \
@@ -141,6 +142,7 @@ RUN virtualenv --python=python2 --no-site-packages /root/venv_python2.7.13 \
 		sympy \
 		h5py \
 		matplotlib \
+		pyfftw \
 		tensorflow \
 		deap \
 		nose \
@@ -181,6 +183,7 @@ RUN tar -xf /opt/python/Python-3.7.1.tar.xz -C /opt/python/ \
 		sympy \
 		h5py\
 		matplotlib \
+		pyfftw \
 		deap \
 		nose \
 		scikit-learn \
@@ -188,7 +191,6 @@ RUN tar -xf /opt/python/Python-3.7.1.tar.xz -C /opt/python/ \
 		pyepics \
 		spyder \
 		pymba \
-		pyfftw \
 		ipympl \
 		pandas_datareader \
 		bs4 \
@@ -216,6 +218,7 @@ RUN tar -xf /opt/python/Python-3.6.7.tar.xz -C /opt/python/ \
 		sympy \
 		h5py\
 		matplotlib \
+		pyfftw \
 		tensorflow \
 		deap \
 		nose \
@@ -224,7 +227,6 @@ RUN tar -xf /opt/python/Python-3.6.7.tar.xz -C /opt/python/ \
 		pyepics \
 		spyder \
 		pymba \
-		pyfftw \
 		jupyterthemes \
 		ipympl \
 		pandas_datareader \
@@ -317,8 +319,8 @@ RUN /bin/bash -c "mkdir -p /opt/R/Rpackages/ \
 ##################
 #### dotfiles ####
 ##################
-COPY dotfiles/.PyCharmCE2018.3 /root/.PyCharmCE2018.3
-COPY dotfiles/.java /root/.java
+#COPY dotfiles/.PyCharmCE2018.3 /root/.PyCharmCE2018.3
+#COPY dotfiles/.java /root/.java
 COPY dotfiles/bashrc /root/.bashrc
 COPY dotfiles/vimrc /root/.vimrc
 COPY dotfiles/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py

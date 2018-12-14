@@ -68,7 +68,7 @@ alias Pelegant='mpiexec.hydra -n 8 Pelegant'
 ################
 #### Ocelot ####
 ################
-export PYTHONPATH=$PYTHONPATH:/opt/occelot
+export PYTHONPATH=$PYTHONPATH:/opt/ocelot
 
 ###############
 #### accpy ####
