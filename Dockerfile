@@ -117,8 +117,11 @@ RUN virtualenv --python=python3 --no-site-packages /root/venv_python3.5.3 \
 		spyder \
 		pymba \
 		ipympl \
+		pandas_datareader \
+		bs4 \
+		numba \
+		numexpr \
 	  && pip install --upgrade \
-		ozelot \
 		mayavi \
           && python -m ipykernel install --user --name py35env --display-name 'Python 3.5.3' \
 	  && jupyter labextension install @jupyter-widgets/jupyterlab-manager \
@@ -147,8 +150,11 @@ RUN virtualenv --python=python2 --no-site-packages /root/venv_python2.7.13 \
 		spyder \
 		pymba \
 		ipympl \
+		pandas_datareader \
+		bs4 \
+		numba \
+		numexpr \
 	&& pip install --upgrade \
-		ozelot \
 		mayavi \
 	&& python -m ipykernel install --user --name py27env --display-name 'Python 2.7.13' \
 	&& ln -s /usr/lib/python2.7/dist-packages/PyQt5/ /root/venv_python2.7.13/lib/python2.7/site-packages/ \
@@ -184,8 +190,10 @@ RUN tar -xf /opt/python/Python-3.7.1.tar.xz -C /opt/python/ \
 		pymba \
 		pyfftw \
 		ipympl \
-	  && pip install --upgrade \
-		ozelot \
+		pandas_datareader \
+		bs4 \
+		numba \
+		numexpr \
           && python -m ipykernel install --user --name py37env --display-name 'Python 3.7.1'"
 
 ##################################
@@ -219,19 +227,23 @@ RUN tar -xf /opt/python/Python-3.6.7.tar.xz -C /opt/python/ \
 		pyfftw \
 		jupyterthemes \
 		ipympl \
-	  && pip install --upgrade \
-		ozelot \
+		pandas_datareader \
+		bs4 \
+		numba \
+		numexpr \
           && python -m ipykernel install --user --name py36env --display-name 'Python 3.6.7'" 
 
 ###############
 #### Mad-X ####
 ###############
+# http://mad.web.cern.ch/mad/
 COPY 3rdparty/mad/5.04.02/ /opt/mad/
 Run chmod +x /opt/mad/madx-linux64-* 
 
 ####################
 #### EPICS-BASE ####
 ####################
+# https://epics.anl.gov/base/index.php
 COPY 3rdparty/epics/baseR3.15.6.tar.gz /opt/epics/
 RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
  && make -C /opt/epics/*/ clean uninstall \
@@ -240,6 +252,7 @@ RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
 #################
 #### Elegant ####
 #################
+# https://www.aps.anl.gov/Accelerator-Operations-Physics/Software/installationGuide_Linux
 COPY 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
 COPY 3rdparty/elegant/defns.rpn /opt/elegant/
 Run alien -i /opt/elegant/*.rpm \
@@ -247,22 +260,31 @@ Run alien -i /opt/elegant/*.rpm \
   && for dir in /root/venv_python2*/lib/python2*; do cp /usr/lib/python2.7/dist-packages/sdds* $dir; done \
   && for dir in /root/venv_python3*/lib/python3*; do cp /usr/lib/python3/dist-packages/sdds* $dir; done
 
+################
+#### Ocelot ####
+################
+# https://github.com/ocelot-collab/ocelot
+RUN git clone https://github.com/ocelot-collab/ocelot.git /opt/ocelot/
+
+###############
+#### accpy ####
+###############
+# https://github.com/emittance/accpy
+COPY 3rdparty/accpy /opt/accpy/
+
 ###############
 #### Vimba ####
 ###############
+# https://www.alliedvision.com/de/produkte/software.html
 COPY 3rdparty/vimba/Vimba_v2.1.3_Linux.tgz /opt/vimba/
 RUN tar -xf /opt/vimba/*.tgz -C /opt/vimba/ \
  && /bin/sh /opt/vimba/*/VimbaGigETL/Install.sh \
  && rm /opt/vimba/*.tgz
 
 ###############
-#### accpy ####
-###############
-COPY 3rdparty/accpy /opt/accpy/
-
-###############
 #### julia ####
 ###############
+# https://julialang.org/downloads/
 COPY 3rdparty/julia/julia-1.0.2-linux-x86_64.tar.gz /opt/julia/
 COPY 3rdparty/julia/addons.jl /opt/julia
 RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
@@ -272,6 +294,7 @@ RUN tar -xf /opt/julia/*tar.gz -C /opt/julia/ \
 #################
 #### pycharm ####
 #################
+# https://www.jetbrains.com/pycharm/
 COPY 3rdparty/pycharm/pycharm-community-2018.3.tar.gz /opt/pycharm/
 RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
   && rm /opt/pycharm/**.tar.gz
@@ -279,6 +302,7 @@ RUN tar -xf /opt/pycharm/*.tar.gz -C /opt/pycharm/ \
 ###########
 #### R ####
 ###########
+# https://www.r-project.org/
 COPY 3rdparty/R/packages.txt /opt/R/
 RUN /bin/bash -c "mkdir -p /opt/R/Rpackages/ \
   && export GPG_TTY='/dev/tty' \

@@ -65,15 +65,20 @@ export PATH=$PATH:/opt/epics/base-3.15.6/bin/linux-x86_64/
 export RPN_DEFNS=/opt/elegant/defns.rpn
 alias Pelegant='mpiexec.hydra -n 8 Pelegant'
 
-###############
-#### julia ####
-###############
-export PATH=$PATH:/opt/julia/julia-1.0.2/bin/
+################
+#### Ocelot ####
+################
+export PYTHONPATH=$PYTHONPATH:/opt/occelot
 
 ###############
 #### accpy ####
 ###############
 export PYTHONPATH=$PYTHONPATH:/opt/accpy
+
+###############
+#### julia ####
+###############
+export PATH=$PATH:/opt/julia/julia-1.0.2/bin/
 
 #################
 #### pycharm ####
@@ -84,7 +89,6 @@ alias pycharm='/opt/pycharm/pycharm-community-2018.3/bin/pycharm.sh'
 #### R ####
 ###########
 export R_LIBS='/opt/R/Rpackages/'
-
 
 ###################
 #### PROSILICA ####
