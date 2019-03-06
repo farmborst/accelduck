@@ -11,11 +11,18 @@
 ####################################
 FROM debian:stretch
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-ENV TZ Europe/Berlin
-
+# set args for build only
 ARG DEBIAN_FRONTEND=noninteractive
+
+# set environment variables that persist for docker run
+ENV DUCK=accelduck \
+    USER=pyBeamCam \
+    GROUP=pyBeamCam \
+    USER_ID=1000 \
+    USER_GID=1000 \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    TZ=Europe/Berlin
 
 COPY dotfiles/apt_preferences /etc/apt/preferences
 COPY dotfiles/sources.list /etc/apt/
@@ -28,6 +35,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
  && apt-get -y -q upgrade \
  && apt-get -y -q dist-upgrade \
  && apt-get -y -q install \
+        gosu \
 	htop \
 	screen \
 	tmux \
@@ -330,3 +338,9 @@ COPY dotfiles/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.
 ##################
 RUN apt-get clean \
  &&  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#####################	
+#### Entry-Point ####
+#####################
+COPY dotfiles/user-mapping.sh /root/
+ENTRYPOINT ["/bin/bash", "/root/user-mapping.sh]
