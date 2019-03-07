@@ -4,7 +4,6 @@
 # >> docker build . -t debianstretch:accelduck
 # >> docker save -o /PATHTOFILE/accelduck-amd64.tar debianstretch:accelduck
 # >> docker load -i /PATHTOFILE/accelduck-amd64.tar
-# >> docker run -v /PATHTOSHAREDDIR/dockershare:/mnt/dockershare --network host -ti debianstretch:accelduck /bin/bash
 
 ####################################
 #### Debian-Stretch Environment ####
@@ -124,7 +123,6 @@ RUN virtualenv --python=python3 --no-site-packages /opt/python/venv_python3.5.3 
 		vtk \
 		pyepics \
 		spyder \
-		pymba \
 		ipympl \
 		pandas_datareader \
 		bs4 \
@@ -158,7 +156,6 @@ RUN virtualenv --python=python2 --no-site-packages /opt/python/venv_python2.7.13
 		vtk \
 		pyepics \
 		spyder \
-		pymba \
 		ipympl \
 		pandas_datareader \
 		bs4 \
@@ -198,7 +195,6 @@ RUN tar -xf /opt/python/Python-3.7.2.tar.xz -C /opt/python/ \
 		vtk \
 		pyepics \
 		spyder \
-		pymba \
 		ipympl \
 		pandas_datareader \
 		bs4 \
@@ -327,6 +323,14 @@ RUN /bin/bash -c "mkdir -p /opt/R/Rpackages/ \
 ##################
 #### dotfiles ####
 ##################
+# create user
+RUN groupadd --gid "${USER_GID}" "${USER}" && \
+    useradd \
+      --uid ${USER_ID} \
+      --gid ${USER_GID} \
+      --create-home \
+      --shell /bin/bash \
+      ${USER}
 #COPY dotfiles/.PyCharmCE2018.3 /home/$USER/.PyCharmCE2018.3
 #COPY dotfiles/.java /home/$USER/.java
 COPY dotfiles/bashrc /home/$USER/.bashrc
@@ -343,4 +347,5 @@ RUN apt-get clean \
 #### Entry-Point ####
 #####################
 COPY dotfiles/user-mapping.sh /root/
-ENTRYPOINT ["/bin/bash", "/root/user-mapping.sh]
+RUN chmod +x /root/user-mapping.sh
+ENTRYPOINT ["/root/user-mapping.sh"]
