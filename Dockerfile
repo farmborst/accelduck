@@ -1,10 +1,3 @@
-#############################################################
-#### Building, Distributing and runnging this Dockerfile ####
-#############################################################
-# >> docker build . -t debianstretch:accelduck
-# >> docker save -o /PATHTOFILE/accelduck-amd64.tar debianstretch:accelduck
-# >> docker load -i /PATHTOFILE/accelduck-amd64.tar
-
 ####################################
 #### Debian-Stretch Environment ####
 ####################################
@@ -349,3 +342,10 @@ RUN apt-get clean \
 COPY dotfiles/user-mapping.sh /root/
 RUN chmod +x /root/user-mapping.sh
 ENTRYPOINT ["/root/user-mapping.sh"]
+
+#############################################################
+#### Building, Distributing and runnging this Dockerfile ####
+#############################################################
+# >> docker build . -t debianstretch:accelduck
+# >> docker save -o accelduck-amd64.tar debianstretch:accelduck
+# >> docker load -i accelduck-amd64.tar
