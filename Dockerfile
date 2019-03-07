@@ -102,9 +102,9 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 ##################################
 ##### Python 3.5.3 Virtualenv ####
 ##################################
-RUN virtualenv --python=python3 --no-site-packages /home/$USER/venv_python3.5.3 \
+RUN virtualenv --python=python3 --no-site-packages /opt/python/venv_python3.5.3 \
   && /bin/bash -c "\
-	 source /home/$USER/venv_python3.5.3/bin/activate \
+	 source /opt/python/venv_python3.5.3/bin/activate \
 	  && pip install --upgrade \
 		pip \
 		numpy \
@@ -139,9 +139,9 @@ RUN virtualenv --python=python3 --no-site-packages /home/$USER/venv_python3.5.3 
 ###################################
 ##### Python 2.7.13 Virtualenv ####
 ###################################
-RUN virtualenv --python=python2 --no-site-packages /home/$USER/venv_python2.7.13 \
+RUN virtualenv --python=python2 --no-site-packages /opt/python/venv_python2.7.13 \
   && /bin/bash -c "\
-	source /home/$USER/venv_python2.7.13/bin/activate \
+	source /opt/python/venv_python2.7.13/bin/activate \
 	&& pip install --upgrade \
 		pip \
 		numpy \
@@ -167,22 +167,22 @@ RUN virtualenv --python=python2 --no-site-packages /home/$USER/venv_python2.7.13
 	&& pip install --upgrade \
 		mayavi \
 	&& python -m ipykernel install --user --name py27env --display-name 'Python 2.7.13' \
-	&& ln -s /usr/lib/python2.7/dist-packages/PyQt5/ /home/$USER/venv_python2.7.13/lib/python2.7/site-packages/ \
-	&& ln -s /usr/lib/python2.7/dist-packages/sip.x86_64-linux-gnu.so /home/$USER/venv_python2.7.13/lib/python2.7/site-packages/" 
+	&& ln -s /usr/lib/python2.7/dist-packages/PyQt5/ /opt/python/venv_python2.7.13/lib/python2.7/site-packages/ \
+	&& ln -s /usr/lib/python2.7/dist-packages/sip.x86_64-linux-gnu.so /opt/python/venv_python2.7.13/lib/python2.7/site-packages/" 
 
 
 ##################################
-##### Python 3.7.1 Virtualenv ####
+##### Python 3.7.2 Virtualenv ####
 ##################################
-COPY 3rdparty/python/Python-3.7.1.tar.xz /opt/python/
-RUN tar -xf /opt/python/Python-3.7.1.tar.xz -C /opt/python/ \
-  && cd /opt/python/Python-3.7.1/ \
+COPY 3rdparty/python/Python-3.7.2.tar.xz /opt/python/
+RUN tar -xf /opt/python/Python-3.7.2.tar.xz -C /opt/python/ \
+  && cd /opt/python/Python-3.7.2/ \
   && ./configure --prefix=/opt/python/ --enable-optimizations \
   && make -j8 \
   && make altinstall \
-  && virtualenv --python=/opt/python/bin/python3.7 --no-site-packages /home/$USER/venv_python3.7.1 \
+  && virtualenv --python=/opt/python/bin/python3.7 --no-site-packages /opt/python/venv_python3.7.2 \
   && /bin/bash -c "\
-	 source /home/$USER/venv_python3.7.1/bin/activate \
+	 source /opt/python/venv_python3.7.2/bin/activate \
 	  && pip install --upgrade \
 		pip \
 		numpy \
@@ -204,20 +204,20 @@ RUN tar -xf /opt/python/Python-3.7.1.tar.xz -C /opt/python/ \
 		bs4 \
 		numba \
 		numexpr \
-          && python -m ipykernel install --user --name py37env --display-name 'Python 3.7.1'"
+          && python -m ipykernel install --user --name py37env --display-name 'Python 3.7.2'"
 
 ##################################
-##### Python 3.6.7 Virtualenv ####
+##### Python 3.6.8 Virtualenv ####
 ##################################
-COPY 3rdparty/python/Python-3.6.7.tar.xz /opt/python/
-RUN tar -xf /opt/python/Python-3.6.7.tar.xz -C /opt/python/ \
-  && cd /opt/python/Python-3.6.7/ \
+COPY 3rdparty/python/Python-3.6.8.tar.xz /opt/python/
+RUN tar -xf /opt/python/Python-3.6.8.tar.xz -C /opt/python/ \
+  && cd /opt/python/Python-3.6.8/ \
   && ./configure --prefix=/opt/python/ --enable-optimizations \
   && make -j8 \
   && make altinstall \
-  && virtualenv --python=/opt/python/bin/python3.6 --no-site-packages /home/$USER/venv_python3.6.7 \
+  && virtualenv --python=/opt/python/bin/python3.6 --no-site-packages /opt/python/venv_python3.6.8 \
   && /bin/bash -c "\
-	 source /home/$USER/venv_python3.6.7/bin/activate \
+	 source /opt/python/venv_python3.6.8/bin/activate \
 	  && pip install --upgrade \
 		pip \
 		numpy \
@@ -241,7 +241,7 @@ RUN tar -xf /opt/python/Python-3.6.7.tar.xz -C /opt/python/ \
 		bs4 \
 		numba \
 		numexpr \
-          && python -m ipykernel install --user --name py36env --display-name 'Python 3.6.7'" 
+          && python -m ipykernel install --user --name py36env --display-name 'Python 3.6.8'" 
 
 ###############
 #### Mad-X ####
@@ -267,8 +267,8 @@ COPY 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
 COPY 3rdparty/elegant/defns.rpn /opt/elegant/
 Run alien -i /opt/elegant/*.rpm \
   && rm /opt/elegant/*.rpm \
-  && for dir in /home/$USER/venv_python2*/lib/python2*; do cp /usr/lib/python2.7/dist-packages/sdds* $dir; done \
-  && for dir in /home/$USER/venv_python3*/lib/python3*; do cp /usr/lib/python3/dist-packages/sdds* $dir; done
+  && for dir in /opt/python//venv_python2*/lib/python2*; do cp /usr/lib/python2.7/dist-packages/sdds* $dir; done \
+  && for dir in /opt/python//venv_python3*/lib/python3*; do cp /usr/lib/python3/dist-packages/sdds* $dir; done
 
 ################
 #### Ocelot ####
@@ -321,7 +321,7 @@ RUN /bin/bash -c "mkdir -p /opt/R/Rpackages/ \
   && apt-key adv --no-tty --keyserver ipv4.pool.sks-keyservers.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
   && apt-get -y -q update \
   && apt-get install -y -q r-base libunwind8-dev\
-  && source /home/$USER/venv_python3.5.3/bin/activate \
+  && source /opt/python/venv_python3.5.3/bin/activate \
   && R -f /opt/R/packages.txt"
 
 ##################

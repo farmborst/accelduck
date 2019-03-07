@@ -26,5 +26,4 @@ sed -i -e "s/^${USER}:\([^:]*\):[0-9]*/${USER}:\1:${USER_GID}/"  /etc/group
 
 chown -R ${USER_ID}:${USER_GID} ${USER_HOME}
 
-exec gosu "${USER}" bash
-# exec su "${USER}" --login --preserve-env
+exec gosu "${USER}" /bin/bash
