@@ -32,12 +32,12 @@
 ```
 - activate the python 3 virtualenv
 ```
->> source /root/venv_python3/bin/activate 
+>> source /opt/python/venv_python3.5.3/bin/activate
 ```
 - start JupyterLab
 
 ```
->> jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --allow-root --NotebookApp.token='yourpassword' 
+>> jupyter-lab --notebook-dir=/mnt/dockershare/ --no-browser --NotebookApp.token='yourpassword' 
 ```
 - access jupyter lab from the webbrowser of your host machine and start working...
 ```
@@ -47,12 +47,12 @@
 ## Distribution of the created Docker Image to colleagues (skip download heavy build process)
 - Save the Docker image existing in your local Docker registry after the installation procedure.
 ```
->> docker save -o /PATHTOFILE/accelduck.tar debian:stretch_accelduck
+>> docker save -o accelduck.tar debian:stretch_accelduck
 ```
 - Copy the created tar file and the runfile to your colleagues machine
 - Add the Docker image built on your machine to your colleagues local repository
 ```
->> docker load -i /PATHTOFILE/accelduck.tar
+>> docker load -i accelduck.tar
 ```
 - Follow Usage Instructions
 
