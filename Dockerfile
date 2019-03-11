@@ -50,6 +50,12 @@ RUN git clone https://github.com/ocelot-collab/ocelot.git /opt/ocelot/
 COPY 3rdparty/accpy /opt/accpy/
 
 
+##################
+#### dotfiles ####
+##################
+COPY dotfiles/bashrc /home/$USER/.bashrc 
+
+
 ##################	
 #### Clean-Up ####
 ##################
