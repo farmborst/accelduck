@@ -14,14 +14,14 @@ ENV DUCK=accelduck
 #############################################
 #### Mad-X (http://mad.web.cern.ch/mad/) ####
 #############################################
-COPY 3rdparty/mad/5.04.02/ /opt/mad/
+COPY --chown=root:users 3rdparty/mad/5.04.02/ /opt/mad/
 Run chmod +x /opt/mad/madx-linux64-* 
 
 
 ###########################################################
 #### EPICS-BASE (https://epics.anl.gov/base/index.php) ####
 ###########################################################
-COPY 3rdparty/epics/baseR3.15.6.tar.gz /opt/epics/
+COPY --chown=root:users 3rdparty/epics/baseR3.15.6.tar.gz /opt/epics/
 RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
  && make -C /opt/epics/*/ clean uninstall \
  && make -C /opt/epics/*/
@@ -30,8 +30,8 @@ RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
 ###########################################################################################################
 #### Elegant (https://www.aps.anl.gov/Accelerator-Operations-Physics/Software/installationGuide_Linux) ####
 ###########################################################################################################
-COPY 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
-COPY 3rdparty/elegant/defns.rpn /opt/elegant/
+COPY --chown=root:users 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
+COPY --chown=root:users 3rdparty/elegant/defns.rpn /opt/elegant/
 Run alien -i /opt/elegant/*.rpm \
   && rm /opt/elegant/*.rpm \
   && for dir in /opt/python//venv_python2*/lib/python2*; do cp /usr/lib/python2.7/dist-packages/sdds* $dir; done \
@@ -47,7 +47,7 @@ RUN git clone https://github.com/ocelot-collab/ocelot.git /opt/ocelot/
 ####################################################
 #### accpy (https://github.com/emittance/accpy) ####
 ####################################################
-COPY 3rdparty/accpy /opt/accpy/
+COPY --chown=root:users 3rdparty/accpy /opt/accpy/
 
 
 ##################
