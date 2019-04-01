@@ -60,7 +60,7 @@
 
 ## included opensource tools
 ### accelerator specific
-- [accpy]()
+- [accpy](https://github.com/farmborst/accpy)
 - [ozelot](https://github.com/trycs/ozelot)
 ### generic
 - jupyter-lab
