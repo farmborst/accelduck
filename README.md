@@ -1,5 +1,6 @@
 # accelduck
-**Docker container based on debian providing a debian linux environment for the developement and usage of code for accelerator pyhsics - start working on your actual problems in minutes
+
+#### Docker container based on debian providing a debian linux environment for the developement and usage of code for accelerator pyhsics - start working on your actual problems in minutes
 
 ## Getting Started
 ### Prerequisites
