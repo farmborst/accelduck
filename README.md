@@ -12,7 +12,7 @@
 ### Installation
 - get your local copy of this git repository
 ```
->> git clone 
+>> git clone git@github.com:farmborst/accelduck.git
 ```
 - download required, prorietary software to the directory "3rdparty"
 - comment other proprietary software in the Dockerfile
