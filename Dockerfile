@@ -47,7 +47,7 @@ RUN git clone https://github.com/ocelot-collab/ocelot.git /opt/ocelot/
 ####################################################
 #### accpy (https://github.com/emittance/accpy) ####
 ####################################################
-COPY --chown=root:users 3rdparty/accpy /opt/accpy/
+RUN git clone https://github.com/farmborst/accpy.git /opt/accpy/
 
 
 ##################
