@@ -1,5 +1,6 @@
 # accelduck
-**Docker container based on debian providing a debian linux environment for the developement and usage of code for accelerator pyhsics - start working on your actual problems in minutes
+
+#### Docker container based on debian providing a debian linux environment for the developement and usage of code for accelerator pyhsics - start working on your actual problems in minutes
 
 ## Getting Started
 ### Prerequisites
@@ -12,7 +13,7 @@
 ### Installation
 - get your local copy of this git repository
 ```
->> git clone 
+>> git clone git@github.com:farmborst/accelduck.git
 ```
 - download required, prorietary software to the directory "3rdparty"
 - comment other proprietary software in the Dockerfile
@@ -59,7 +60,7 @@
 
 ## included opensource tools
 ### accelerator specific
-- [accpy]()
+- [accpy](https://github.com/farmborst/accpy)
 - [ozelot](https://github.com/trycs/ozelot)
 ### generic
 - jupyter-lab
