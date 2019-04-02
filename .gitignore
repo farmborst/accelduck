@@ -1,4 +1,5 @@
 *.pyc
-3rdparty/
+3rdparty/*
+!3rdparty/links.txt 
 dotfiles/.Pycharm/
 dotfiles/.java/

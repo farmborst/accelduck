@@ -1,0 +1,11 @@
+# elegant (ELEctron Generation ANd Tracking)
+https://www.aps.anl.gov/Accelerator-Operations-Physics/Software#elegant
+
+# MAD-X (Methodical Accelerator Design)
+https://mad.web.cern.ch/mad/
+https://github.com/MethodicalAcceleratorDesign/MAD-X
+
+# EPICS Base 
+https://epics.anl.gov/download/base/index.php
+https://epics-controls.org/
+https://github.com/epics-base/epics-base
