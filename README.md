@@ -15,7 +15,7 @@
 ```
 >> git clone git@github.com:farmborst/accelduck.git
 ```
-- download required, prorietary software to the directory "3rdparty"
+- download required accelerator software to the directory "3rdparty"
 - comment other proprietary software in the Dockerfile
 - build the docker image
 ```
