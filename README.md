@@ -19,7 +19,7 @@
 - comment other proprietary software in the Dockerfile
 - build the docker image
 ```
->> docker build . -t debian:stretch_accelduck
+>> docker build . -t debianstretch:accelduck
 ```
 
 ### Usage
