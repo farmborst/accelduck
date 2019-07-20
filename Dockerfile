@@ -1,8 +1,7 @@
 ####################################
-#### Debian-Stretch Environment ####
+#### Debian Environment ####
 ####################################
-#FROM debian:stretch
-FROM debianstretch:sciduck
+FROM debian10buster:sciduck
 
 # set args for build only
 ARG DEBIAN_FRONTEND=noninteractive
@@ -14,15 +13,15 @@ ENV DUCK=accelduck
 #############################################
 #### Mad-X (http://mad.web.cern.ch/mad/) ####
 #############################################
-COPY --chown=root:users 3rdparty/mad/5.04.02/ /opt/mad/
-Run chmod +x /opt/mad/madx-linux64-* 
+RUN wget --no-parent --recursive -l1 --execute=robots=off --no-directories --directory-prefix=/opt/mad --reject=index.htm* http://madx.web.cern.ch/madx/releases/last-rel \
+  && chmod +x /opt/mad/madx-linux64-* 
 
 
 ###########################################################
 #### EPICS-BASE (https://epics.anl.gov/base/index.php) ####
 ###########################################################
-COPY --chown=root:users 3rdparty/epics/baseR3.15.6.tar.gz /opt/epics/
-RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
+RUN wget --directory-prefix=/opt/epics https://epics.anl.gov/download/base/base-3.15.6.tar.gz \
+ && tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
  && make -C /opt/epics/*/ clean uninstall \
  && make -C /opt/epics/*/
 
@@ -30,9 +29,9 @@ RUN tar -xf /opt/epics/*.tar.gz -C /opt/epics/ \
 ###########################################################################################################
 #### Elegant (https://www.aps.anl.gov/Accelerator-Operations-Physics/Software/installationGuide_Linux) ####
 ###########################################################################################################
-COPY --chown=root:users 3rdparty/elegant/20181213_Debian9.6/*.rpm /opt/elegant/
+COPY --chown=root:users 3rdparty/elegant/20190719_Debian10.0/*.rpm /opt/elegant/
 COPY --chown=root:users 3rdparty/elegant/defns.rpn /opt/elegant/
-Run alien -i /opt/elegant/*.rpm \
+RUN alien -i /opt/elegant/*.rpm \
   && rm /opt/elegant/*.rpm \
   && for dir in /opt/python//venv_python2*/lib/python2*; do cp /usr/lib/python2.7/dist-packages/sdds* $dir; done \
   && for dir in /opt/python//venv_python3*/lib/python3*; do cp /usr/lib/python3/dist-packages/sdds* $dir; done

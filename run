@@ -1,1 +1,1 @@
-docker run -v /:/mnt/dockershare -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0.0 --network host -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -ti debianstretch:accelduck
+docker run -v /:/mnt/dockershare -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0.0 --network host -e HOST_USER_ID=$(id -u) -e HOST_USER_GID=$(id -g) -ti debian10buster:accelduck
