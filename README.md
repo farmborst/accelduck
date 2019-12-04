@@ -61,7 +61,7 @@
 ## included opensource tools
 ### accelerator specific
 - [accpy](https://github.com/farmborst/accpy)
-- [ozelot](https://github.com/trycs/ozelot)
+- [ocelot](https://github.com/ocelot-collab/ocelot)
 ### generic
 - jupyter-lab
 - python 2.7
